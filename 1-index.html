@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>مسار</title>
+
+<!-- PWA manifest -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0B2E38">
+
+<!-- iOS support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="مسار">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAChElEQVR4nO2Wz2sTQRTH35vZzW42iU1LMbTQVtoo1R7FX1Ca2otFPOo/4/+gN2k99aAVT2rxoKCXgvgDKoo2aNs1bjQp/kgaEpNs9se88VBri10xPZR42C88GGbmzffDYx4zaNcrEjoo1knzECAECAFCgP8CQNl7ihQAyAEAJICE7QAAYAiAezmtrQoQkQAAyGZXl6yPhfcAAFJKQgDETVP+K9AhKjd9sd4uQFsVkFJKAABzLV9PHx76Dd3y/XJD0Lc6iWrD8x1XSomMQy9jMUOJ9m3lERFxzgO9AiellLTTnIgEIiLjAJxzICLhkPxaIDKF54PBUBvu6kpzEl0qYnznOYwxzjn/a6UDFxCRbQVjjKuqqjHGuOcTqKoSYYxxFTBZf7MaGY0bE4NG9FRxxayoCDEAAMsqLAOAzxjjeauQffhgcZGI/ECvoP9ALvcp6zqezxhjjuO41Vrd1nUNcznLd10BY2NH9MLndfvZ01eH4olYfSJzcmNh4XG6vy9VzEyecOdv3h9OdidK4+PHKwt3H402m63YlauXG4kD8YP/BHA9r3Z99ta7jVIlpiiK0LSI192TdCbPnk6AlDg3d0cfSQ98uXRxelSL6tH5G/deT02d6UmlevtnZ26b5y9MKAOD/UMz1+bNkZGBhvkhHzt2NN04N53JIOKuDtkFIKWUQRv3S7vuACKi3BYRkXi7vPKkVK6sSSmllS+8rFZ/FDfHxSXP823P8xumab0gIlGr1dfXTOs5EQkhhEdEtNUNQQq8A3/Ktu2SqkYMReGGbdvfVTUSUxRutFqtDU3TkgBAtm2XDcNICSFcz/Nruq71tlOBtgD2Ux1/C0KAECAECAE6DvATCQ9Uw+R5IzEAAAAASUVORK5CYII=">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy:#0B2E38; --navy2:#123B47; --teal:#1FB8A6; --teal-d:#16897C;
+    --gold:#C9A227; --cream:#F7F4EF; --white:#FFFFFF; --muted:#8A7C5E; --danger:#C1584B;
+    --sat-top: env(safe-area-inset-top, 0px);
+    --sat-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  html,body{ height:100%; overscroll-behavior:none; }
+  body{
+    background:#0B2E38; font-family:'Cairo',Tahoma,Arial,sans-serif; color:var(--navy);
+    display:flex; justify-content:center; min-height:100vh;
+  }
+  #app{
+    width:100%; max-width:460px; min-height:100vh; background:var(--cream);
+    position:relative; display:flex; flex-direction:column; overflow:hidden;
+    box-shadow:0 0 60px rgba(0,0,0,.4);
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    padding:calc(14px + var(--sat-top)) 18px 12px; display:flex; align-items:center; justify-content:space-between;
+    background:var(--cream); position:sticky; top:0; z-index:20;
+  }
+  .topbar .greet{ font-size:16px; font-weight:900; }
+  .topbar .sub{ font-size:10.5px; color:var(--muted); font-weight:700; margin-top:1px;}
+  .avatar-btn{ width:38px; height:38px; border-radius:50%; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; }
+
+  /* ---------- views ---------- */
+  .views{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:20px;}
+  .view{ display:none; padding:4px 18px 90px; animation:fadeIn .25s ease; }
+  .view.active{ display:block; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  h2.title{ font-size:18px; font-weight:900; margin:6px 0 2px; }
+  p.subtitle{ font-size:11.5px; color:var(--muted); font-weight:700; margin-bottom:16px; }
+
+  .card{ background:var(--white); border-radius:18px; padding:15px; box-shadow:0 8px 20px -14px rgba(11,46,56,.18); margin-bottom:12px;}
+  .btn{ background:var(--navy); color:#fff; font-weight:800; font-size:13px; text-align:center; padding:13px; border-radius:14px; border:none; width:100%; font-family:inherit; cursor:pointer;}
+  .btn.ghost{ background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+  .btn.teal{ background:var(--teal); }
+  .btn.sm{ padding:9px; font-size:11.5px; border-radius:11px; }
+
+  /* home trip cards */
+  .trip-card .trip-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:9px;}
+  .trip-tag{ font-size:9.5px; font-weight:800; padding:4px 9px; border-radius:10px;}
+  .trip-tag.go{ background:#E3F4F1; color:var(--teal-d);}
+  .trip-tag.back{ background:#FBEFD2; color:#9C7A1E;}
+  .leader-row{ display:flex; align-items:center; gap:9px; margin-bottom:8px;}
+  .avatar{ width:30px; height:30px; border-radius:50%; background:var(--navy); color:var(--gold); font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .leader-name{ font-size:12px; font-weight:800;}
+  .leader-role{ font-size:9.5px; color:var(--muted);}
+  .trip-meta{ font-size:10px; color:var(--muted); display:flex; justify-content:space-between; margin-top:8px; padding-top:8px; border-top:1px solid #F0E8D8;}
+
+  .stats-row{ display:flex; gap:10px; margin:14px 0; }
+  .stat-mini{ flex:1; background:var(--white); border-radius:15px; padding:12px 8px; text-align:center; box-shadow:0 6px 16px -12px rgba(90,70,30,.15);}
+  .stat-mini .num{ font-size:17px; font-weight:900; color:var(--teal-d);}
+  .stat-mini .lbl{ font-size:8.5px; color:var(--muted); font-weight:700; margin-top:2px;}
+
+  /* notifications */
+  .notif{ display:flex; gap:11px; padding:13px 0; border-bottom:1px solid #F0E8D8; }
+  .notif:last-child{ border-bottom:none; }
+  .notif-ic{ width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0;}
+  .notif-body b{ display:block; font-size:11.5px; font-weight:800; }
+  .notif-body p{ font-size:10px; color:var(--muted); margin-top:2px; line-height:1.4;}
+  .notif-body span{ font-size:9px; color:#B7C4C1; display:block; margin-top:4px; font-weight:700;}
+
+  /* profile */
+  .profile-head{ display:flex; align-items:center; gap:13px; margin-bottom:18px; }
+  .profile-head .av-big{ width:56px; height:56px; border-radius:50%; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:20px;}
+  .profile-head b{ font-size:15px; display:block; }
+  .profile-head span{ font-size:10.5px; color:var(--muted); }
+  .list-item{ display:flex; align-items:center; gap:12px; padding:13px 4px; border-bottom:1px solid #F0E8D8; }
+  .list-item:last-child{ border-bottom:none; }
+  .list-ic{ width:34px; height:34px; border-radius:10px; background:#F0EAD9; display:flex; align-items:center; justify-content:center; font-size:14px;}
+  .list-item b{ font-size:12px; font-weight:700; flex:1; }
+  .list-item .chev{ color:#C9BC9E; font-size:14px; }
+
+  .sub-hero{ background:var(--navy); border-radius:20px; padding:20px; text-align:center; margin-bottom:12px;}
+  .sub-hero .amt{ font-size:28px; font-weight:900; color:#fff; }
+  .sub-hero .per{ font-size:10.5px; color:var(--gold); font-weight:800; margin-top:2px;}
+  .status-chip2{ display:inline-flex; align-items:center; gap:5px; background:#E3F4F1; color:var(--teal-d); font-size:9.5px; font-weight:800; padding:5px 12px; border-radius:12px; margin-top:10px;}
+
+  /* bottom nav */
+  .bottomnav{
+    position:sticky; bottom:0; left:0; right:0; background:var(--white);
+    display:flex; justify-content:space-around; padding:10px 0 calc(10px + var(--sat-bottom));
+    border-top:1px solid #EFE9DA; z-index:20;
+  }
+  .navitem{ display:flex; flex-direction:column; align-items:center; gap:4px; font-size:9.5px; color:#C9BC9E; font-weight:700; background:none; border:none; font-family:inherit; padding:4px 14px; cursor:pointer;}
+  .navitem.active{ color:var(--navy); }
+  .navitem .dot{ width:5px; height:5px; border-radius:50%; background:var(--teal); opacity:0; margin-top:-2px;}
+  .navitem.active .dot{ opacity:1; }
+  .navitem svg{ width:20px; height:20px; }
+
+  /* live tracking full overlay */
+  #liveView{
+    position:absolute; inset:0; background:var(--cream); z-index:50; display:none; flex-direction:column;
+  }
+  #liveView.active{ display:flex; }
+  .map-big{ height:38vh; min-height:220px; position:relative; overflow:hidden; flex-shrink:0;}
+  .back-btn{
+    position:absolute; top:calc(14px + var(--sat-top)); right:16px; width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; z-index:5; border:none; font-size:16px; cursor:pointer;
+  }
+  .drive-card{ background:var(--white); border-radius:22px 22px 0 0; margin-top:-20px; position:relative; z-index:2; padding:20px 20px 30px; flex:1;}
+  .eta-badge{ background:var(--teal); color:#fff; font-size:11px; font-weight:800; padding:6px 13px; border-radius:11px; display:inline-block; margin-bottom:12px;}
+  .sos{ margin-top:14px; text-align:center; font-size:11px; font-weight:800; color:var(--danger); padding:12px; border:1.5px solid #F0D4CE; border-radius:13px;}
+
+  /* toast install hint */
+  #installHint{
+    position:fixed; bottom:14px; left:50%; transform:translateX(-50%); width:min(92%,420px);
+    background:var(--navy); color:#fff; border-radius:16px; padding:13px 16px; font-size:11.5px; font-weight:700;
+    display:none; align-items:center; gap:10px; z-index:100; box-shadow:0 14px 30px -10px rgba(0,0,0,.5);
+  }
+  #installHint.show{ display:flex; }
+  #installHint button{ margin-right:auto; background:var(--gold); color:var(--navy); border:none; border-radius:9px; padding:7px 12px; font-weight:900; font-size:10.5px; font-family:inherit;}
+  #installHint .close{ background:none; color:#9FB3AE; font-size:16px; padding:0; margin-right:0;}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <div class="topbar">
+    <div><div class="greet">صباح الخير، فهد 👋</div><div class="sub">جدول هذا الأسبوع (الأحد–الخميس) جاهز</div></div>
+    <div class="avatar-btn" onclick="showView('profile')">ف</div>
+  </div>
+
+  <div class="views">
+
+    <!-- HOME -->
+    <div class="view active" id="view-home">
+      <div class="card trip-card" onclick="openLive()">
+        <div class="trip-head"><span class="trip-tag go">رحلة الذهاب</span><span style="font-size:10px;font-weight:800;color:var(--muted)">6:45 ص</span></div>
+        <div class="leader-row"><div class="avatar">خ</div><div><div class="leader-name">خالد المطيري — القائد</div><div class="leader-role">يمر عليك عند باب منزلك مباشرة</div></div></div>
+        <div class="trip-meta"><span>📍 يمر عند باب بيتك</span><span>✓ مؤكدة</span></div>
+      </div>
+
+      <div class="card trip-card">
+        <div class="trip-head"><span class="trip-tag back">رحلة العودة</span><span style="font-size:10px;font-weight:800;color:var(--muted)">4:15 م</span></div>
+        <div class="leader-row"><div class="avatar">خ</div><div><div class="leader-name">خالد المطيري — نفس المجموعة</div><div class="leader-role">مرتبطة تلقائيًا برحلة الذهاب</div></div></div>
+        <div class="trip-meta"><span>🔁 جدول هذا الأسبوع</span><span>✓ مؤكدة</span></div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-mini"><div class="num">5</div><div class="lbl">رحلات هذا الأسبوع</div></div>
+        <div class="stat-mini"><div class="num">6.2</div><div class="lbl">كجم CO₂ أقل</div></div>
+      </div>
+
+      <div class="card" style="background:#E3F4F1; box-shadow:none;">
+        <div style="font-size:10.5px;color:var(--teal-d);font-weight:700;text-align:center;">اضغط على بطاقة رحلة الذهاب لمتابعتها مباشرة</div>
+      </div>
+    </div>
+
+    <!-- TRIPS -->
+    <div class="view" id="view-trips">
+      <h2 class="title">مسار اقترح مجموعتك ✨</h2>
+      <p class="subtitle">لهذا الأسبوع (الأحد–الخميس) · حسب موقعك ودوامك</p>
+
+      <div class="card">
+        <div class="leader-row"><div class="avatar" style="width:38px;height:38px;font-size:13px;">خ</div><div><div class="leader-name">خالد المطيري</div><div style="font-size:10px;color:var(--gold);font-weight:800;">★★★★★ <span style="color:var(--muted);font-weight:700;">4.9</span></div></div></div>
+        <div style="display:flex;align-items:center;gap:6px;margin:10px 0;">
+          <div class="avatar" style="width:24px;height:24px;font-size:9px;background:var(--teal);margin-right:-8px;">ع</div>
+          <div class="avatar" style="width:24px;height:24px;font-size:9px;background:var(--teal);margin-right:-8px;">ت</div>
+          <div class="avatar" style="width:24px;height:24px;font-size:9px;background:var(--teal);margin-right:-8px;">م</div>
+          <span style="font-size:10px;color:var(--muted);font-weight:700;margin-right:6px;">و2 آخرين معك بالرحلة</span>
+        </div>
+        <div style="background:#FBEFD2;border-radius:13px;padding:11px;margin-bottom:6px;">
+          <div style="font-size:10.5px;font-weight:800;color:#7A5F17;">📍 القائد يمر عند باب بيتك مباشرة</div>
+          <div style="font-size:9.5px;color:#9C7A1E;margin-top:2px;">ما تحتاج تمشي خطوة · مطابقة ذكية ضمن نطاق 500م من مسار القائد</div>
+        </div>
+      </div>
+
+      <button class="btn teal" onclick="alert('تم تأكيد انضمامك للرحلة ✓')">قبول الانضمام</button>
+
+      <h2 class="title" style="margin-top:22px;">سجل الرحلات</h2>
+      <div class="card">
+        <div class="notif" style="border-bottom:1px solid #F0E8D8;">
+          <div class="notif-ic" style="background:#E3F4F1;">✓</div>
+          <div class="notif-body"><b>الأربعاء — ذهاب وعودة</b><p>مع خالد المطيري · 24 دقيقة</p></div>
+        </div>
+        <div class="notif" style="border-bottom:1px solid #F0E8D8;">
+          <div class="notif-ic" style="background:#E3F4F1;">✓</div>
+          <div class="notif-body"><b>الثلاثاء — ذهاب وعودة</b><p>مع سعيد الشهري (بديل) · 26 دقيقة</p></div>
+        </div>
+        <div class="notif">
+          <div class="notif-ic" style="background:#E3F4F1;">✓</div>
+          <div class="notif-body"><b>الأحد — ذهاب وعودة</b><p>مع خالد المطيري · 22 دقيقة</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="view" id="view-notif">
+      <h2 class="title">الإشعارات</h2>
+      <p class="subtitle">آخر تحديثات رحلاتك</p>
+      <div class="card" style="padding:6px 15px;">
+        <div class="notif">
+          <div class="notif-ic" style="background:#FBEFD2;">!</div>
+          <div class="notif-body"><b>خالد اعتذر عن رحلة اليوم</b><p>مسار يبحث عن قائد بديل بالقرب منك...</p><span>الثلاثاء 4:02 ص</span></div>
+        </div>
+        <div class="notif">
+          <div class="notif-ic" style="background:#E3F4F1;">✓</div>
+          <div class="notif-body"><b>تم إيجاد قائد بديل</b><p>سعيد الشهري سيقودك اليوم، بنفس التوقيت تقريبًا</p><span>الثلاثاء 4:04 ص</span></div>
+        </div>
+        <div class="notif">
+          <div class="notif-ic" style="background:#E3F4F1;">💳</div>
+          <div class="notif-body"><b>تم تجديد اشتراكك الأسبوعي</b><p>200 ريال — بطاقة مدى تنتهي بـ 4521</p><span>الأحد 6:00 ص</span></div>
+        </div>
+        <div class="notif">
+          <div class="notif-ic" style="background:#F3E9DC;">⭐</div>
+          <div class="notif-body"><b>قيّم رحلتك الأخيرة</b><p>كيف كانت رحلتك مع خالد المطيري؟</p><span>الأحد 7:40 ص</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="view" id="view-profile">
+      <h2 class="title">حسابي</h2>
+      <div class="profile-head">
+        <div class="av-big">ف</div>
+        <div><b>فهد العتيبي</b><span>عضو رحلة · حي النرجس</span></div>
+      </div>
+
+      <div class="sub-hero">
+        <div class="amt">200 ريال</div>
+        <div class="per">اشتراكك الأسبوعي · نشط ✓</div>
+      </div>
+
+      <div class="card" style="padding:4px 15px;">
+        <div class="list-item"><div class="list-ic">💳</div><b>طرق الدفع</b><span class="chev">‹</span></div>
+        <div class="list-item"><div class="list-ic">🧾</div><b>سجل المدفوعات</b><span class="chev">‹</span></div>
+        <div class="list-item"><div class="list-ic">🏢</div><b>جهة العمل: شركة تقنية المستقبل</b><span class="chev">‹</span></div>
+        <div class="list-item"><div class="list-ic">⚙️</div><b>الإعدادات</b><span class="chev">‹</span></div>
+        <div class="list-item"><div class="list-ic">🚪</div><b>تسجيل الخروج</b><span class="chev">‹</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottomnav">
+    <button class="navitem active" data-view="home" onclick="showView('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      الرئيسية<span class="dot"></span>
+    </button>
+    <button class="navitem" data-view="trips" onclick="showView('trips')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      رحلاتي<span class="dot"></span>
+    </button>
+    <button class="navitem" data-view="notif" onclick="showView('notif')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+      الإشعارات<span class="dot"></span>
+    </button>
+    <button class="navitem" data-view="profile" onclick="showView('profile')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      حسابي<span class="dot"></span>
+    </button>
+  </div>
+
+  <!-- LIVE TRACKING OVERLAY -->
+  <div id="liveView">
+    <button class="back-btn" onclick="closeLive()">→</button>
+    <div class="map-big">
+      <svg viewBox="0 0 400 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="300" fill="#DCEAE8"/>
+        <g stroke="#C9DEDB" stroke-width="1"><path d="M0 100H400M0 200H400M100 0V300M280 0V300"/></g>
+        <path d="M40 260 C110 220,170 140,340 60" fill="none" stroke="#0B2E38" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="220" cy="120" r="12" fill="#1FB8A6"/>
+        <circle cx="340" cy="60" r="9" fill="#C9A227"/>
+      </svg>
+    </div>
+    <div class="drive-card">
+      <span class="eta-badge">القائد يقترب — 3 دقائق</span>
+      <div class="leader-row"><div class="avatar" style="width:38px;height:38px;font-size:13px;">خ</div><div><div class="leader-name">خالد المطيري</div><div class="leader-role">تويوتا كامري · بيضاء</div></div></div>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <div class="btn ghost sm" style="flex:1;">📞 اتصال</div>
+        <div class="btn ghost sm" style="flex:1;">💬 رسالة</div>
+      </div>
+      <div class="sos">🆘 طوارئ ودعم فوري</div>
+    </div>
+  </div>
+
+  <div id="installHint">
+    <span id="installText">📲 أضف مسار لشاشتك الرئيسية لتجربة أسرع</span>
+    <button id="installBtn" style="display:none;">تثبيت</button>
+    <button class="close" onclick="document.getElementById('installHint').classList.remove('show')">✕</button>
+  </div>
+
+</div>
+
+<script>
+  function showView(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-'+name).classList.add('active');
+    document.querySelectorAll('.navitem').forEach(n => n.classList.toggle('active', n.dataset.view === name));
+    closeLive();
+    document.querySelector('.views').scrollTop = 0;
+  }
+  function openLive(){ document.getElementById('liveView').classList.add('active'); }
+  function closeLive(){ document.getElementById('liveView').classList.remove('active'); }
+
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(()=>{});
+    });
+  }
+
+  // Install prompt handling (Android/Chrome)
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installHint').classList.add('show');
+    document.getElementById('installBtn').style.display = 'inline-block';
+  });
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      document.getElementById('installHint').classList.remove('show');
+    }
+  });
+
+  // iOS hint (no beforeinstallprompt on iOS Safari)
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isIOS && !isStandalone) {
+    document.getElementById('installText').textContent = '📲 لإضافة مسار: اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية"';
+    document.getElementById('installHint').classList.add('show');
+  }
+</script>
+
+</body>
+</html>
