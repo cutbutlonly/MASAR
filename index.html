@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — دليل المشروع</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2E38; --navy2:#123B47; --teal:#1FB8A6; --teal-d:#16897C;
+    --gold:#C9A227; --cream:#F7F4EF; --white:#FFFFFF; --muted:#6B7A78;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--cream); font-family:'Cairo',Tahoma,Arial,sans-serif; color:var(--navy);
+    min-height:100vh;
+  }
+  .hero{
+    background:var(--navy); padding:52px 20px 60px; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:''; position:absolute; top:-60px; left:-60px; width:220px; height:220px; border-radius:50%;
+    border:1px solid rgba(201,162,39,.25);
+  }
+  .hero::after{
+    content:''; position:absolute; bottom:-80px; right:-80px; width:260px; height:260px; border-radius:50%;
+    border:1px solid rgba(31,184,166,.2);
+  }
+  .hero-tag{
+    display:inline-block; font-size:12px; font-weight:800; letter-spacing:.5px; color:var(--gold);
+    background:rgba(201,162,39,.12); border:1px solid rgba(201,162,39,.3); padding:6px 16px; border-radius:20px; margin-bottom:18px;
+  }
+  .hero h1{ font-size:32px; font-weight:900; color:#fff; margin-bottom:10px; position:relative; }
+  .hero p{ font-size:14px; color:#9FB3AE; max-width:520px; margin:0 auto; line-height:1.8; position:relative; }
+
+  .wrap{ max-width:900px; margin:-30px auto 0; padding:0 20px 60px; position:relative; }
+
+  .primary-card{
+    background:var(--white); border-radius:22px; padding:28px 26px; box-shadow:0 20px 50px -20px rgba(11,46,56,.3);
+    display:flex; align-items:center; gap:20px; margin-bottom:36px; text-decoration:none; color:inherit;
+  }
+  .primary-card .ic{
+    width:64px; height:64px; border-radius:18px; background:var(--navy); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:28px;
+  }
+  .primary-card .txt b{ font-size:19px; font-weight:900; display:block; margin-bottom:4px; }
+  .primary-card .txt span{ font-size:12.5px; color:var(--muted); line-height:1.6; }
+  .primary-card .go{
+    margin-right:auto; background:var(--teal); color:#fff; font-size:12px; font-weight:800;
+    padding:10px 18px; border-radius:12px; flex-shrink:0; white-space:nowrap;
+  }
+
+  .section-title{ font-size:15px; font-weight:900; margin:0 4px 14px; display:flex; align-items:center; gap:8px; }
+  .section-title .num{ width:22px; height:22px; border-radius:50%; background:var(--gold); color:var(--navy); font-size:10.5px; font-weight:900; display:flex; align-items:center; justify-content:center; }
+  .section-sub{ font-size:11.5px; color:var(--muted); margin:-10px 4px 16px; }
+
+  .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:36px; }
+  .card{
+    background:var(--white); border-radius:16px; padding:18px; text-decoration:none; color:inherit;
+    box-shadow:0 10px 24px -16px rgba(11,46,56,.2); display:flex; flex-direction:column; gap:10px;
+    transition:transform .15s ease;
+  }
+  .card .ic2{ width:38px; height:38px; border-radius:11px; background:#E3F4F1; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .card b{ font-size:13px; font-weight:800; }
+  .card span{ font-size:10.5px; color:var(--muted); line-height:1.5; }
+
+  .portal-group{
+    background:#F0EAD9; border-radius:18px; padding:18px; margin-bottom:36px;
+  }
+  .portal-group-head{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .portal-group-head .ic3{ width:34px; height:34px; border-radius:10px; background:var(--navy); display:flex; align-items:center; justify-content:center; font-size:15px; }
+  .portal-group-head b{ font-size:13.5px; font-weight:900; }
+  .portal-links{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .plink{
+    background:var(--white); border-radius:12px; padding:12px 14px; text-decoration:none; color:inherit;
+    font-size:11.5px; font-weight:700; display:flex; align-items:center; justify-content:space-between;
+  }
+  .plink .arrow{ color:var(--teal-d); font-size:13px; }
+
+  footer{ text-align:center; font-size:10.5px; color:var(--muted); padding:20px; }
+
+  @media (max-width:520px){
+    .grid, .portal-links{ grid-template-columns:1fr; }
+    .primary-card{ flex-wrap:wrap; }
+    .primary-card .go{ margin-right:0; width:100%; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-tag">دليل المشروع الكامل</span>
+  <h1>مسار</h1>
+  <p>منظومة ذكية لإدارة التنقل الوظيفي المشترك — من التطبيق التفاعلي إلى بوابة جهة العمل ولوحة التحكم الوطنية</p>
+</div>
+
+<div class="wrap">
+
+  <a class="primary-card" href="1-index.html">
+    <div class="ic">📱</div>
+    <div class="txt">
+      <b>التطبيق التفاعلي</b>
+      <span>جرّبه بنفسك — تنقّل حقيقي بين الشاشات، ومبدّل بين وضع العضو والقائد</span>
+    </div>
+    <div class="go">افتح التطبيق ←</div>
+  </a>
+
+  <div class="section-title"><span class="num">١</span> وثيقة تصميم الجوال</div>
+  <div class="section-sub">كل شاشات رحلة العضو والقائد بالتفصيل — للعرض والمراجعة</div>
+  <div class="grid">
+    <a class="card" href="4-member-screens.html">
+      <div class="ic2">👤</div>
+      <b>رحلة العضو — 8 شاشات</b>
+      <span>التسجيل، اقتراح الذكاء الاصطناعي، التتبع المباشر، إعادة الترتيب، الاشتراك</span>
+    </a>
+    <a class="card" href="5-leader-screens.html">
+      <div class="ic2">🚗</div>
+      <b>رحلة القائد — 6 شاشات</b>
+      <span>طلبات الانضمام، مسار الالتقاط، القيادة المباشرة، الأرباح والمحفظة</span>
+    </a>
+  </div>
+
+  <div class="section-title"><span class="num">٢</span> بوابة جهة العمل</div>
+  <div class="section-sub">لوحة ويب لمسؤول الموارد البشرية بالشركة المشتركة</div>
+  <div class="portal-group">
+    <div class="portal-group-head"><div class="ic3">💼</div><b>4 صفحات</b></div>
+    <div class="portal-links">
+      <a class="plink" href="6-portal-home.html">الرئيسية <span class="arrow">←</span></a>
+      <a class="plink" href="7-portal-employees.html">الموظفون <span class="arrow">←</span></a>
+      <a class="plink" href="8-portal-locations.html">المواقع والدوام <span class="arrow">←</span></a>
+      <a class="plink" href="9-portal-reports.html">التقارير والمؤشرات <span class="arrow">←</span></a>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="num">٣</span> لوحة التحكم الوطنية</div>
+  <div class="section-sub">لجهة إشرافية تراقب أداء جميع الجهات المشتركة في مسار</div>
+  <div class="grid" style="grid-template-columns:1fr;">
+    <a class="card" href="10-national-dashboard.html">
+      <div class="ic2">🏛️</div>
+      <b>لوحة التحكم الوطنية</b>
+      <span>مؤشرات وطنية، مقارنة الجهات، الأثر البيئي والاقتصادي على مستوى الدولة</span>
+    </a>
+  </div>
+
+</div>
+
+<footer>مسار — منظومة ذكية للتنقل الوظيفي المشترك</footer>
+
+</body>
+</html>
