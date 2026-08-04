@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — رحلة القائد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2E38; --navy2:#123B47; --teal:#1FB8A6; --teal-d:#16897C;
+    --gold:#C9A227; --cream:#F4EFE9; --white:#FFFFFF; --muted:#8A7C5E; --danger:#C1584B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:#E9E4D8; font-family:'Cairo',Tahoma,Arial,sans-serif; padding:44px 24px;}
+  .page-head{ max-width:1100px; margin:0 auto 40px; text-align:center; }
+  .page-head .eyebrow{ display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:.5px; color:var(--teal-d); background:#E3F4F1; padding:6px 16px; border-radius:20px; margin-bottom:14px;}
+  .page-head h1{ font-size:27px; font-weight:900; color:var(--navy); margin-bottom:8px;}
+  .page-head p{ font-size:14px; color:#6B5E42; max-width:620px; margin:0 auto; line-height:1.7;}
+
+  .flow{ max-width:1500px; margin:0 auto; display:flex; gap:26px; overflow-x:auto; padding:10px 4px 30px;}
+  .step{ display:flex; flex-direction:column; align-items:center; gap:14px; flex-shrink:0;}
+  .step-num{ width:26px; height:26px; border-radius:50%; background:var(--navy); color:var(--gold); font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center;}
+  .step-title{ font-size:13.5px; font-weight:800; color:var(--navy); text-align:center;}
+  .step-sub{ font-size:10.5px; color:#9C8F6E; text-align:center; max-width:250px; line-height:1.5;}
+
+  .phone{ width:270px; height:620px; border-radius:36px; background:#1a1a1a; padding:10px; box-shadow:0 24px 50px -18px rgba(60,45,10,.35); position:relative;}
+  .phone .notch{ position:absolute; top:10px; left:50%; transform:translateX(-50%); width:100px; height:20px; background:#1a1a1a; border-radius:0 0 14px 14px; z-index:9;}
+  .screen{ width:100%; height:100%; border-radius:27px; overflow:hidden; position:relative; background:var(--cream); display:flex; flex-direction:column; color:var(--navy);}
+  .statusbar{ display:flex; justify-content:space-between; padding:12px 18px 2px; font-size:11px; font-weight:700;}
+  .content{ flex:1; overflow:hidden; padding:8px 16px 0; display:flex; flex-direction:column;}
+
+  .h-title{ font-size:16px; font-weight:900; color:var(--navy); margin:6px 0 2px;}
+  .h-sub{ font-size:10.5px; color:var(--muted); margin-bottom:12px;}
+
+  .card{ background:var(--white); border-radius:18px; padding:13px; box-shadow:0 8px 20px -12px rgba(90,70,30,.18); margin-bottom:10px;}
+  .btn{ background:var(--navy); color:#fff; font-weight:800; font-size:12.5px; text-align:center; padding:12px; border-radius:14px;}
+  .btn.ghost{ background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+  .btn.teal{ background:var(--teal);}
+  .avatar{ width:28px; height:28px; border-radius:50%; background:var(--navy); color:var(--gold); font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+
+  /* L1: leader setup */
+  .leader-badge{ display:flex; align-items:center; gap:10px; background:var(--navy); border-radius:16px; padding:14px; margin-bottom:12px;}
+  .leader-badge .ic{ width:36px; height:36px; border-radius:11px; background:var(--gold); display:flex; align-items:center; justify-content:center; font-size:16px;}
+  .leader-badge .t1{ color:#fff; font-weight:800; font-size:12.5px;}
+  .leader-badge .t2{ color:#9FB3AE; font-size:9.5px; margin-top:1px;}
+  .stepper-row{ display:flex; align-items:center; justify-content:space-between; padding:8px 0;}
+  .stepper-btn{ width:34px; height:34px; border-radius:10px; background:#F0EAD9; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:800; color:var(--navy);}
+  .stepper-val{ font-size:20px; font-weight:900; color:var(--navy);}
+  .car-row{ display:flex; align-items:center; gap:10px; padding-top:6px; border-top:1px solid #F0E8D8; margin-top:6px;}
+  .car-ic{ width:30px; height:30px; border-radius:9px; background:#F0EAD9; display:flex; align-items:center; justify-content:center; font-size:13px;}
+
+  /* L2: requests */
+  .req-card{ display:flex; align-items:center; gap:9px; background:var(--white); border-radius:15px; padding:10px; margin-bottom:8px; box-shadow:0 6px 16px -12px rgba(90,70,30,.15);}
+  .req-info b{ display:block; font-size:11px; font-weight:800;}
+  .req-info span{ font-size:9px; color:var(--muted);}
+  .req-actions{ display:flex; gap:6px; margin-right:auto;}
+  .req-btn{ width:26px; height:26px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800;}
+  .req-btn.yes{ background:#E3F4F1; color:var(--teal-d);}
+  .req-btn.no{ background:#F5E7E4; color:var(--danger);}
+
+  /* L3: route stops */
+  .stop-item{ display:flex; align-items:flex-start; gap:9px;}
+  .stop-dot{ width:20px; height:20px; border-radius:50%; background:var(--navy); color:var(--gold); font-size:9.5px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .stop-dot.end{ background:var(--gold); color:var(--navy);}
+  .stop-line{ width:1.5px; height:16px; background:#E7DFC9; margin-right:9.25px;}
+  .stop-title{ font-size:11px; font-weight:800;}
+  .stop-time{ font-size:9px; color:var(--muted); margin-top:1px;}
+
+  /* L4: live driving */
+  .map-big{ height:210px; position:relative; margin:0 -16px; overflow:hidden;}
+  .drive-card{ background:var(--white); border-radius:18px 18px 0 0; margin-top:-16px; position:relative; z-index:2; padding:14px 16px; flex:1; display:flex; flex-direction:column;}
+  .next-badge{ background:var(--gold); color:var(--navy); font-size:10px; font-weight:800; padding:5px 11px; border-radius:10px; display:inline-block; margin-bottom:8px;}
+  .checklist{ margin-top:10px;}
+  .chk-item{ display:flex; align-items:center; gap:8px; padding:6px 0; font-size:10.5px; font-weight:700; color:var(--muted);}
+  .chk-item.done{ color:var(--navy); text-decoration:line-through; text-decoration-color:#C9BC9E;}
+  .chk-dot{ width:16px; height:16px; border-radius:50%; border:2px solid #E7DFC9; flex-shrink:0;}
+  .chk-item.done .chk-dot{ background:var(--teal); border-color:var(--teal);}
+
+  /* L5: finish */
+  .done-icon{ font-size:38px; text-align:center; margin:14px 0 4px;}
+  .done-title{ text-align:center; font-size:16px; font-weight:900;}
+  .trip-summary{ text-align:center; font-size:10px; color:var(--muted); margin-top:4px; margin-bottom:14px;}
+  .rate-row{ display:flex; align-items:center; justify-content:space-between; background:var(--white); border-radius:14px; padding:9px 12px; margin-bottom:8px;}
+  .rate-row .nm{ font-size:11px; font-weight:800;}
+  .rate-stars{ font-size:12px; color:var(--gold);}
+
+  /* ---- L6: Earnings/wallet ---- */
+  .earn-hero{ background:var(--navy); border-radius:20px; padding:20px; text-align:center; margin-bottom:12px;}
+  .earn-hero .amt{ font-size:30px; font-weight:900; color:var(--teal); }
+  .earn-hero .per{ font-size:11px; color:#9FB3AE; font-weight:700; margin-top:2px;}
+  .earn-toggle{ display:flex; justify-content:center; gap:6px; margin-top:12px;}
+  .earn-toggle span{ font-size:9px; font-weight:800; color:#6E8378; background:rgba(255,255,255,.06); padding:5px 10px; border-radius:9px;}
+  .earn-toggle span.on{ background:var(--teal); color:var(--navy); }
+  .brk-item{ display:flex; justify-content:space-between; align-items:center; padding:7px 0; font-size:10.5px; font-weight:700; border-bottom:1px solid #F0E8D8;}
+  .brk-item:last-child{ border-bottom:none; }
+  .brk-item .d{ color:var(--muted); font-weight:600; font-size:9.5px;}
+  .brk-total{ display:flex; justify-content:space-between; padding-top:8px; font-size:11px; font-weight:800;}
+  .brk-total.deduct{ color:var(--danger); font-size:10px; font-weight:700;}
+  .brk-total.net{ color:var(--teal-d); font-size:13px; font-weight:900; border-top:1.5px solid var(--border); padding-top:8px; margin-top:4px;}
+  .payout-note{ background:#E3F4F1; border-radius:13px; padding:11px; font-size:9.5px; color:var(--teal-d); font-weight:700; text-align:center; margin-top:8px;}
+
+  .footer-note{ max-width:640px; margin:8px auto 0; text-align:center; font-size:12.5px; color:#6B5E42; line-height:1.8;}
+  .footer-note b{ color:var(--navy);}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <span class="eyebrow">الدفعة الثانية — رحلة القائد</span>
+  <h1>ست شاشات أساسية لرحلة القائد في تطبيق مسار</h1>
+  <p>من تأكيد القيادة والمقاعد، إلى اعتماد طلبات الانضمام، إلى مسار التقاط الأعضاء من أبواب بيوتهم بالترتيب، إلى القيادة المباشرة، إلى إنهاء الرحلة وتقييم الأعضاء.</p>
+</div>
+
+<div class="flow">
+
+  <!-- L1 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">أنت القائد لهذا الأسبوع</div>
+          <div class="h-sub">الأحد – الخميس · 6:45 ص</div>
+
+          <div class="leader-badge">
+            <div class="ic" style="display:flex;align-items:center;justify-content:center;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAPlElEQVR4nO3dD4zlV1XA8bsr3Zl375tdSrsYKbhIi9vOzLlvtm/nnfOGxYkFwwoRFC0SYiVRAv4pEUmgRgypJBVqBFMb/wBBiDYhQSoabIj8qUQikQBlLa0IGqiiQVHoUluhu9195s7s27Lt7uzM7O/97u/97veT3GTTv+93zrnnvXfe749zAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgxXYvrFzejfriTrRf8KJv8FHfFqK9nVV9DNZiK3pjEPtVH+3w7MLBp+XOPwozd+XyJWHRrvdit4doXwvRRqx8MfBi/+2j3hbEXrant/rE3PWBdtoRZPgcL/beEPU7bPiGNj2xB0PUd/reylLugkFLeLGrvdgnshc3a2ufDKJ+JMThYu76wZTqLh3aG0TfFaKdYPNNaQMSOxai/ra74vBM7nrCFOnIwEK0r2YvYFZVMTgSessLuesKU8CLvjJEe5jN17IGJPagX9Tn564vNFiIelP2QmVNsgkc82Ivz11naKAg9ho2XxEN6KSPg+ty1xsapNOzV6XCaEBxsmqJQfopd3BN7rpDA3jR/vq0mM1XUgy82Le6C3pV7vpDTv2+91H/KXcxsjI1gahfeNJgsJtNWCgf7ffZfMU3oL9IZ3rmrkXULP0uzEk+xW/+U18H9A1swML4qO/j3Z8GcKoGTvje4AW5axI1ScMf3v3Z/AwFCxWivod3fxrAWX4ZuOeS/StzuesTE5SuGQ9iD9EAaADnqAGGgm0Wor2azc/m3/gcAYaCrRVEP0cDoAGcpwYYCrZRp2cDNj+bnzMFCxWivYMGQAPgTMEC7Z1f7abzv2kANIAt1gBDwTbwYq9g87P5t3fhEEPBqRfE/p4GQAPYZg0wFJxm6e6wbH42/wVdOcjlw9PLi91S3yWm9p9ufn5XnuPUfpXH4hoknaHnxe7N2ci5fHgaXXF4Jj09prZCEXtzrkNtcwNI5mRlvxc7mrMJMBScMumRUTUWx8m5JX1mrmNtewNIOqIvzH0hF0PBKeLF7qytMKJ9OO+xtr8BJEH0N3M2AIaCU2JGDj6jzpt9dmV4bc7jLaUBpDv4eLH352wCDAWnQPo+XsLwr8AGwFAQ57G6+oQg+h8lDP9KbAAJQ0GcU6dnP1HK8K/UBpAwFMRZhWh3lDL8K7kBJAwFcYaODJ4aRB8pZfhXegNgKIgz+GhvLGn4N1ZwA2AoiNN2BtH7Shr+jZXcABKGgnA+Dp9X2vBvrPQGkDAULJyP9melDf/GaADrGAoWqtvvX7r+6Oeyhn9jNIDTOFOwRF7sdSUO/8ZoAI/i8uEC+Wj/WOLwb4wGcCaGggXpyvCHSh3+jdEAHo+hYCGC2J+UOvwbowGcHUPBlru4399T5/P+mjb8G6MBnBNDwTYLMvjlkod/YzSAc2Mo2GJB9K6Sh39jNICNMRRsoc7i8sHSh39jNIDzYyjYMkH0j0of/o3RADaHoWBbxBjqfN5fU4d/YzSATWMo2AY+Dn+uxnf/xg7/xmgAm8dQsAVC1E/W9v2/wcO/MRrA1jAUnGLdxeGVtW3+hg//xmgAW8dQcEr5qL9b48f/Rg//xmgA28NQcNrMz+/yol+vqwE0ffg3RgPYNoaC0yREfWmN7/6NH/6N0QC2j6HgFPFRP1rb9/8pGP6N0QAuDEPBKTATBz9Q49Nhp2L4N0YDuHAMBRsuRL2pxo//UzH8G6MBVIOhYFPV/Ly/aRn+jdEAKsNQsIk6MnhRje/+UzP8G6MBVIehYAMF0Q/W1QCmafg3RgOoFkPBBun07LIan/c3VcO/MRpA9RgKNoQX/Y3aPv6LHQ3R3j5ty4vdXnEssh9TI1aNc6dw9pV+9Xr3Bnl/axB7kxe9Yf0CucE16Q3TtYHvrSylze9F/ytzEljEYKpqwEd9YO2COdHfCov6I67f924qxBjCol3vo96dO4gsYtCiGnh4bY7Ws5e4fauzrnGuODzjxV5f53n+LGJQYg140fuD6B/uXli53DVB+ojixb6UOzAsYlBUDYg+4qPeFnrLC3l2/r7VWS92S5q8Zw8GixiUWwMnQrR3zF25fEltez/E4ZNrvasPixhQA6ONYuCj/Y8Xe0U6G3Kim3+mp08PYl8mIWxKasCaFwPRD3WXDu2dyOafPTDcF0Tvy36QLGJADYw2aAL/nh66W/lz/LzYPQSezUcNWPNjIHq807NXVbX/dwSxv8p+UCxiQA2MthIDH+2NF7z7Q9TXEng2HzVgUxkDH/XWbQ8H0wkHIeq3cx8EixhQA1b/VbIh2h0Ens1HDdj0x0DsNVva/F0ZPDv7i2YRA2pgVFEMTnSjvnjTDcBH/QjBZwNSA9aqawlm5OAzNnVXFU7zzZ8wFjEI1cfg0+kCvg0bQIh6M8VH8VED1tYYvGXjj/9c4Zc7QSxiMJpYDESPh0WNZ9383QW9iuCzAakBa3UMfNSPn/X8AB/t53O/OBYxoAashhjoS8/y/X/tpoUkgBhQA7HdMfBi9zrndj72+//f5H5hLGJADVgtMehG/ckzPwFwvT/FRwMaFRMD0bse+wngaCNeGIsYUAOjOmLQ6dnguz8BHCPwbD5qoLgrBk8PAbO/IBYxoAaszgbwjdNnBxJ4Nh81YMXFwC/q82kADUgEixiEHA1A7K00AIqPBhQLjYHo52gAuZPAIgYxWwxOdvv9S5kBsAnZhLHMGPhoh2kADUgEixiEHDEQ/RUaAMVHA4plxsCL/QENoAGJYBGDkKcBfIwGQPHRgGKZMfCin6cBNCARLGIQcsRA9D4aAMVHA4plxsBH/SYNoAGJYBGDkOcTwHEaAMVHA4rlxoAG0IAksIhBoAFQBDQCaiDwCYAioBFQA4GvABQBjYAaCMwAKAIaATUQGAJSBDQCaiDwKwBFQCOgBgI/A1IENAJqIHAeAEVAI6AGAicCUQQ0AmogcCYgRUAjoAYCpwJTBDQCaiBwLQBFQCOgBgIXA1EENAJqIHA1IEVAI6AGApcDUwQ0Ais+BtwPgCIofhOEgmuABtCAJLCIQaABTLoI9LNe7He6MvipsKhxjxy62PX7F6WV/pz+WleG16Z/JojexaZs26Yk/6G0TwBe7GiI9pa5uPyDbovmZGV/iHqzF/tW7uNgkf8woTpoawN4OES96eJ+f4+7QHt6q09MTSSIHWvAcbHI/4gGsHERHOku6FWuYqG3vOCj3s0mbHwTIv+x0E8APuptbt/qrJsUs44Xe2/u42SR/1BRHbSmAXjR33PO7XCTt9NHvTX38bLIf6ABjDe//WlNm39sRxD7YzZhMxoR+beCPwGIfsrNz+9ydev3LwpRP5n9+Etf5H9UbAPwUR+YPTDc5zKZ6enTfdT/zR2HUhf5t7IbQIj6WpeZF3td/jiUush/KLYBpGebpzP5cpuf3xWi/mv2eJS2yP+o7AawaNe7hgjRXp09HqUt8j8qtwGI/l8VZ/lVZf1sQf129riUssj/qKJYnnQ+6jezJ3SLy0d9n2uYIPrnueNSyiL/VlUcv5GGWHdO3QsXfaVrmG7UX8wdl1IW+bdq4hj1o6kBvDx3Qre8essLrmGCmGSPSymL/I+qiKOPg+ucu/ba7/FR/y57Uje7RI9nOfHnfK44PBNEH8ken7Yv8j+qIo5e7BPptPa12g2L+r0h2meyJ3dz699cQ4VoX21AfNq+yH+84Bh+OsThkx9/pVvUX0u/rzYgyedcXuxe11DpteWOT9sX+bftx0/sK17s9ee9YrbTs8u82NVetF/FCqI3VlgER1xD+Wj/UNlxit5YVfxzL/JvmfNvV3cOrDwl28YIPXtJZe8AUf/FNVQQ+3JVx5nuXehagvxb0flP74yHK2wAD7hm2lHlhUE+Dp/nWoL8W9H5T7+RH6rso3EKTr//fa5hOjJ4apXHOLu4MnQtQf6t6Py7uSV9ZpWboxPtx1zDdGTwoiqPcffCyuWuJci/FZ1/51ZXn7B+p96qPh7r21zDeLFbqmsA+p10foZrC/I/Kjr/iY/6hUovBR2fxNAM6RZhX6mswYnd41qG/FvR+Xch6geq/IgceoMfdg0R4uCaKo/Ni93uWob8W9H5Tx+Rf73SBhDtDtcQQfRD1TYAvcG1DPm3ovOfhmRWcQM4mf6buY+r27NnVXxco87ScNm1DPm3ovO/NghKv+FXullE78o6LFkfbh2p+N3//tYNgBLyPyo6/0kQ/WDV75ZB7E3ZjifqTZUfT9QPuJYi/1Z0/tOpsi+rfsPYCd8bvKDuY+mIvjD9vyfQAH7atRT5t6Lznx6m4Sv/GrD+KeCh2YXhSq3f+8UemsTjzNNVma6tyP+o6PwnE3ukltiDXvRHa3j9z51IE1vv/u90LUf+rej8p0uNB5O8W0x6UMeEnhO449T9Eo5P6vV3FpcPupYj/1Z0/tf4aB+eWBNY/yh1Z3dxeGVVr7e7NJj3UT8+ydecziVwhSD/VnT+XXfRVie6mdbXw+kjVboQ5YIuYhF9VxA7NunXm66Yc4Ug/1Z0/tdM/B310XXSR/vb9CSZ7oJetZl3+/Skn3TTxPTv1nZ75sKQfys6/+u30Z7g9+lzbjbR+9Mjpb3Y+0PU96S19uf1v3a07teTPl2kpuMKQ/6t6PyvSZf11r7hGrf0Zlco8m9F599dsn9lLt3mOf8mzLRE79s7v9p1hSL/WnT+H71IpIYhW+OW6PF0QpErHPnHJC4Vbfw6db4CJnOpcOOXJ/9n2Jmu78+dlBrXX07oZKVpRf6Lt36e+PQ8o3C7S/RTxX/vOxvyj26/f2ml945r2PJR//nxz2TDGPmHmz0w3Le+UVq2+cW+NDv/rO8nxRsj/zj1tGL9bO5NW+H6DO/8m0f+4Z40GOxOp0g2YPNe2BL7a77zbx35h0v3Rjv1ZNkJ3Hln4utkeliI6/cvIpXbRP7xXffd/1oDNvWmlhf9enogJtmrBvmHS9+h1y/eqecKve2+66c73nSXDu0lZdUi/1jTlcGzfdS7G7DZH7uOcGrv5JF/JDvTE4Kb8EuBF/28j/azrb2XezORf6zZ0Vkc/ni6BVjNg8ITXuxj6dbgnNKbFfnHunSSTbqoJD1ZdWLv9lHvTjcGnV04+DTi3izkH6d1enaZj4PrQrR3e7EvbuvOQ+t3GP7i2m2se/oznQMrTyHE04H840zz87vSXYLT14Wu6C+lp68GsTf7qLemtfZn0RvS30v/zJys7Of3+xYh/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwD3W/wNABlH0wajCEwAAAABJRU5ErkJggg==" style="width:60%;height:60%;object-fit:contain;"></div>
+            <div><div class="t1">وضع القائد مفعّل</div><div class="t2">ستستقبل طلبات انضمام تلقائيًا</div></div>
+          </div>
+
+          <div class="card">
+            <div class="loc-txt" style="margin-bottom:2px;"><b>المقاعد المتاحة</b></div>
+            <div class="stepper-row">
+              <div class="stepper-btn">−</div>
+              <div class="stepper-val">3</div>
+              <div class="stepper-btn">+</div>
+            </div>
+            <div class="car-row">
+              <div class="car-ic" style="display:flex;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" style="width:60%;height:60%;object-fit:contain;"></div>
+              <div><div class="leader-name" style="font-size:11px;">تويوتا كامري — بيضاء</div><div style="font-size:9px;color:var(--muted)">لوحة أ ب ج 1234</div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="loc-txt"><b>مسارك المعتاد</b><span style="display:block;font-size:9.5px;margin-top:2px;">حي النرجس ← طريق الملك فهد</span></div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 16px;"><div class="btn">تأكيد كقائد لهذا الأسبوع</div></div>
+      </div>
+    </div>
+    <div class="step-num">١</div>
+    <div class="step-title">تأكيد القيادة والمقاعد</div>
+    <div class="step-sub">القائد يحدد مقاعده المتاحة قبل أن يبدأ النظام بالمطابقة</div>
+  </div>
+
+  <!-- L2 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">3 طلبات انضمام</div>
+          <div class="h-sub">مطابقة الذكاء الاصطناعي حسب مسارك ودوامك</div>
+
+          <div class="req-card">
+            <div class="avatar">ع</div>
+            <div class="req-info"><b>عبدالله العتيبي</b><span>على مسارك · بيته أول توقف</span></div>
+            <div class="req-actions"><div class="req-btn yes">✓</div><div class="req-btn no">✕</div></div>
+          </div>
+          <div class="req-card">
+            <div class="avatar">ت</div>
+            <div class="req-info"><b>تركي الحربي</b><span>على مسارك · انحراف بسيط 300م</span></div>
+            <div class="req-actions"><div class="req-btn yes">✓</div><div class="req-btn no">✕</div></div>
+          </div>
+          <div class="req-card">
+            <div class="avatar">م</div>
+            <div class="req-info"><b>محمد القحطاني</b><span>على مسارك · قريب من وجهتك</span></div>
+            <div class="req-actions"><div class="req-btn yes">✓</div><div class="req-btn no">✕</div></div>
+          </div>
+
+          <div class="card" style="background:#E3F4F1; box-shadow:none;">
+            <div style="font-size:10px; color:var(--teal-d); font-weight:700; text-align:center;">قبلت 3 من 3 — مقاعدك مكتملة</div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 16px;"><div class="btn teal">تأكيد المجموعة</div></div>
+      </div>
+    </div>
+    <div class="step-num">٢</div>
+    <div class="step-title">اعتماد طلبات الانضمام</div>
+    <div class="step-sub">القائد يوافق أو يرفض كل طلب، مع سبب المطابقة</div>
+  </div>
+
+  <!-- L3 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">مسار رحلتك اليوم</div>
+          <div class="h-sub">3 التقاطات + 2 نزول — وجهات متقاربة</div>
+
+          <div class="map-mini" style="height:95px; border-radius:14px; overflow:hidden; margin-bottom:10px;">
+            <svg viewBox="0 0 240 95" width="100%" height="100%">
+              <rect width="240" height="95" fill="#EFEAE0"/>
+              <path d="M15 80 C 60 70, 90 55, 120 45 S 190 25, 225 15" fill="none" stroke="#0B2E38" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="15" cy="80" r="6" fill="#0B2E38"/>
+              <circle cx="90" cy="58" r="5" fill="#1FB8A6"/>
+              <circle cx="150" cy="38" r="5" fill="#1FB8A6"/>
+              <circle cx="185" cy="28" r="5" fill="#C9A227"/>
+              <circle cx="225" cy="15" r="6" fill="#C9A227"/>
+            </svg>
+          </div>
+
+          <div class="stop-item"><div class="stop-dot">1</div><div><div class="stop-title">عبدالله العتيبي — باب المنزل</div><div class="stop-time">6:47 ص · التقاط</div></div></div>
+          <div class="stop-line"></div>
+          <div class="stop-item"><div class="stop-dot">2</div><div><div class="stop-title">تركي الحربي — باب المنزل</div><div class="stop-time">6:52 ص · التقاط</div></div></div>
+          <div class="stop-line"></div>
+          <div class="stop-item"><div class="stop-dot">3</div><div><div class="stop-title">محمد القحطاني — باب المنزل</div><div class="stop-time">6:58 ص · التقاط</div></div></div>
+          <div class="stop-line"></div>
+          <div class="stop-item"><div class="stop-dot end">4</div><div><div class="stop-title">تركي — مجمع الأعمال (وجهته)</div><div class="stop-time">7:08 ص · نزول</div></div></div>
+          <div class="stop-line"></div>
+          <div class="stop-item"><div class="stop-dot end">🏁</div><div><div class="stop-title">جهتك (عبدالله ومحمد أيضًا)</div><div class="stop-time">7:15 ص · نزول</div></div></div>
+
+          <div class="card" style="background:#E3F4F1; box-shadow:none; margin-top:6px;">
+            <div style="font-size:9px; color:var(--teal-d); font-weight:700; text-align:center;">↩️ رحلة العودة تلتقط كل عضو من نفس نقطة نزوله هنا</div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 16px;"><div class="btn ghost">الكل جاهز</div></div>
+      </div>
+    </div>
+    <div class="step-num">٣</div>
+    <div class="step-title">مسار متعدد الوجهات</div>
+    <div class="step-sub">يدعم وجهة واحدة مشتركة أو عدة وجهات متقاربة، بالترتيب الأمثل</div>
+  </div>
+
+  <!-- L4 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar" style="position:absolute;z-index:5;width:100%;color:#fff;"><span>9:41</span><span>●●●</span></div>
+        <div class="map-big">
+          <svg viewBox="0 0 270 210" width="100%" height="100%">
+            <rect width="270" height="210" fill="#DCEAE8"/>
+            <g stroke="#C9DEDB" stroke-width="1"><path d="M0 60H270M0 120H270M80 0V210M190 0V210"/></g>
+            <path d="M20 180 C 70 150, 110 100, 220 40" fill="none" stroke="#0B2E38" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="120" cy="95" r="9" fill="#1FB8A6"/>
+            <circle cx="220" cy="40" r="6" fill="#C9A227"/>
+          </svg>
+        </div>
+        <div class="drive-card">
+          <span class="next-badge">التوجه إلى تركي الحربي — 4 د</span>
+          <div class="checklist">
+            <div class="chk-item done"><div class="chk-dot"></div>عبدالله العتيبي — تم الالتقاط</div>
+            <div class="chk-item"><div class="chk-dot"></div>تركي الحربي — التالي</div>
+            <div class="chk-item"><div class="chk-dot"></div>محمد القحطاني</div>
+          </div>
+          <div style="margin-top:auto;padding-bottom:4px;"><div class="btn">وصلت — أعلم تركي</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٤</div>
+    <div class="step-title">القيادة المباشرة</div>
+    <div class="step-sub">إشعار تلقائي لكل عضو عند اقتراب القائد من بابه</div>
+  </div>
+
+  <!-- L5 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="done-icon">🏁</div>
+          <div class="done-title">وصلتم بالسلامة</div>
+          <div class="trip-summary">3 أعضاء · 28 دقيقة · وفّرت 3 مركبات اليوم</div>
+
+          <div class="loc-txt" style="margin-bottom:8px;"><b>قيّم أعضاء رحلتك</b></div>
+          <div class="rate-row"><span class="nm">عبدالله العتيبي</span><span class="rate-stars">★★★★★</span></div>
+          <div class="rate-row"><span class="nm">تركي الحربي</span><span class="rate-stars">★★★★★</span></div>
+          <div class="rate-row"><span class="nm">محمد القحطاني</span><span class="rate-stars">★★★★☆</span></div>
+
+          <div style="margin-top:auto;padding-bottom:16px;"><div class="btn">إنهاء الرحلة</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٥</div>
+    <div class="step-title">إنهاء الرحلة والتقييم</div>
+    <div class="step-sub">ملخص الرحلة وتقييم متبادل يغذّي الذكاء الاصطناعي</div>
+  </div>
+
+  <!-- L6 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">أرباح هذا الأسبوع</div>
+          <div class="h-sub">الأحد – الخميس · 3 أعضاء طوال الأسبوع</div>
+
+          <div class="earn-hero">
+            <div class="amt">525 ريال</div>
+            <div class="per">صافي أرباحك بعد عمولة مسار</div>
+            <div class="earn-toggle"><span class="on">هذا الأسبوع</span><span>الشهر</span><span>السجل</span></div>
+          </div>
+
+          <div class="card">
+            <div class="brk-item"><span>10 رحلات مفردة × 3 أعضاء</span><span>30 رحلة</span></div>
+            <div class="brk-item"><span>سعر الرحلة المفردة للعضو</span><span>20 ريال</span></div>
+            <div class="brk-total"><span>الإجمالي الخام</span><span>600 ريال</span></div>
+            <div class="brk-total deduct"><span>عمولة مسار (12.5%)</span><span>− 75 ريال</span></div>
+            <div class="brk-total net"><span>الصافي المستحق</span><span>525 ريال</span></div>
+          </div>
+
+          <div class="payout-note">التحويل القادم: الجمعة إلى حساب بنكي ينتهي بـ ...1234</div>
+
+          <div class="card" style="margin-top:8px;">
+            <div class="loc-txt" style="font-size:9.5px;color:var(--muted);text-align:center;">لو تغيّر القائد منتصف الأسبوع، يُحتسب لكل قائد الرحلات الفعلية التي قادها فقط</div>
+          </div>
+
+          <div style="margin-top:auto;padding-bottom:16px;"><div class="btn ghost">عرض سجل الأرباح الكامل</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٦</div>
+    <div class="step-title">أرباح ومحفظة القائد</div>
+    <div class="step-sub">احتساب دقيق بالرحلة المفردة، حتى مع تغيّر القائد منتصف الأسبوع</div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  أضفت <b>الشاشة السادسة</b> — أرباح القائد محسوبة بدقة (20 ريال لكل رحلة مفردة لكل عضو)، مع خصم عمولة مسار 12.5% تلقائيًا قبل التحويل. راجعها وقل لي رأيك.
+</div>
+
+</body>
+</html>

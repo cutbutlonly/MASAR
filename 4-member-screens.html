@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — رحلة العضو</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2E38; --navy2:#123B47; --teal:#1FB8A6; --teal-d:#16897C;
+    --gold:#C9A227; --cream:#F4EFE9; --white:#FFFFFF; --muted:#8A7C5E; --danger:#C1584B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:#E9E4D8;
+    font-family:'Cairo',Tahoma,Arial,sans-serif;
+    padding:44px 24px;
+  }
+  .page-head{ max-width:1100px; margin:0 auto 40px; text-align:center; }
+  .page-head .eyebrow{
+    display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:.5px;
+    color:var(--teal-d); background:#E3F4F1; padding:6px 16px; border-radius:20px; margin-bottom:14px;
+  }
+  .page-head h1{ font-size:27px; font-weight:900; color:var(--navy); margin-bottom:8px;}
+  .page-head p{ font-size:14px; color:#6B5E42; max-width:600px; margin:0 auto; line-height:1.7;}
+
+  .flow{
+    max-width:1500px; margin:0 auto;
+    display:flex; gap:26px; overflow-x:auto; padding:10px 4px 30px;
+  }
+  .step{ display:flex; flex-direction:column; align-items:center; gap:14px; flex-shrink:0;}
+  .step-num{
+    width:26px; height:26px; border-radius:50%; background:var(--navy); color:var(--gold);
+    font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center;
+  }
+  .step-title{ font-size:13.5px; font-weight:800; color:var(--navy); text-align:center;}
+  .step-sub{ font-size:10.5px; color:#9C8F6E; text-align:center; max-width:250px; line-height:1.5;}
+
+  .phone{
+    width:270px; height:620px; border-radius:36px; background:#1a1a1a;
+    padding:10px; box-shadow:0 24px 50px -18px rgba(60,45,10,.35);
+    position:relative;
+  }
+  .phone .notch{
+    position:absolute; top:10px; left:50%; transform:translateX(-50%);
+    width:100px; height:20px; background:#1a1a1a; border-radius:0 0 14px 14px; z-index:9;
+  }
+  .screen{
+    width:100%; height:100%; border-radius:27px; overflow:hidden; position:relative;
+    background:var(--cream); display:flex; flex-direction:column; color:var(--navy);
+  }
+  .statusbar{ display:flex; justify-content:space-between; padding:12px 18px 2px; font-size:11px; font-weight:700;}
+  .content{ flex:1; overflow:hidden; padding:8px 16px 0; display:flex; flex-direction:column;}
+
+  .h-title{ font-size:16px; font-weight:900; color:var(--navy); margin:6px 0 2px;}
+  .h-sub{ font-size:10.5px; color:var(--muted); margin-bottom:12px;}
+
+  .card{ background:var(--white); border-radius:18px; padding:13px; box-shadow:0 8px 20px -12px rgba(90,70,30,.18); margin-bottom:10px;}
+  .btn{ background:var(--navy); color:#fff; font-weight:800; font-size:12.5px; text-align:center; padding:12px; border-radius:14px;}
+  .btn.ghost{ background:transparent; color:var(--navy); border:1.5px solid var(--navy); }
+  .btn.teal{ background:var(--teal); }
+
+  /* ---- Screen 1: Onboarding ---- */
+  .map-mini{ height:100px; border-radius:14px; overflow:hidden; position:relative; margin-bottom:10px;}
+  .loc-row{ display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #F0E8D8;}
+  .loc-row:last-child{ border-bottom:none; }
+  .loc-ic{ width:30px; height:30px; border-radius:10px; background:#F0EAD9; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;}
+  .loc-txt b{ display:block; font-size:11.5px; color:var(--navy); font-weight:800;}
+  .loc-txt span{ font-size:9.5px; color:var(--muted);}
+  .days{ display:flex; gap:5px; margin-top:8px;}
+  .day{ width:24px; height:24px; border-radius:8px; background:#F0EAD9; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:#B5A67D;}
+  .day.on{ background:var(--navy); color:var(--gold);}
+  .role-row{ display:flex; gap:7px; margin-top:4px;}
+  .role-chip{ flex:1; text-align:center; padding:9px 4px; border-radius:12px; border:1.5px solid #E7DFC9; font-size:10px; font-weight:800; color:var(--muted);}
+  .role-chip.sel{ background:var(--navy); border-color:var(--navy); color:var(--gold);}
+
+  /* ---- Screen 2: Home ---- */
+  .trip-card{ background:var(--white); border-radius:18px; padding:14px; margin-bottom:10px; box-shadow:0 8px 20px -12px rgba(90,70,30,.18);}
+  .trip-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:9px;}
+  .trip-tag{ font-size:9.5px; font-weight:800; padding:4px 9px; border-radius:10px;}
+  .trip-tag.go{ background:#E3F4F1; color:var(--teal-d);}
+  .trip-tag.back{ background:#FBEFD2; color:#9C7A1E;}
+  .leader-row{ display:flex; align-items:center; gap:8px; margin-bottom:8px;}
+  .avatar{ width:28px; height:28px; border-radius:50%; background:var(--navy); color:var(--gold); font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .leader-name{ font-size:11px; font-weight:800;}
+  .leader-role{ font-size:8.5px; color:var(--muted);}
+  .trip-meta{ font-size:10px; color:var(--muted); display:flex; justify-content:space-between; margin-top:6px;}
+  .stats-row{ display:flex; gap:8px; margin-top:2px;}
+  .stat-mini{ flex:1; background:var(--white); border-radius:14px; padding:10px 6px; text-align:center; box-shadow:0 6px 16px -12px rgba(90,70,30,.15);}
+  .stat-mini .num{ font-size:15px; font-weight:900; color:var(--teal-d);}
+  .stat-mini .lbl{ font-size:8px; color:var(--muted); font-weight:700; margin-top:2px;}
+
+  .bottomnav{ display:flex; justify-content:space-around; padding:11px 0 14px; background:var(--white); border-top:1px solid #F0E8D8; margin-top:auto;}
+  .navitem{ display:flex; flex-direction:column; align-items:center; gap:3px; font-size:8.5px; color:#C9BC9E; font-weight:700;}
+  .navitem.active{ color:var(--navy);}
+  .navicon{ width:18px; height:18px; border-radius:6px; background:#F0E8D8;}
+  .navitem.active .navicon{ background:var(--gold);}
+
+  /* ---- Screen 3: AI Match ---- */
+  .sparkle{ font-size:11px; }
+  .match-leader{ display:flex; align-items:center; gap:10px; background:#FBF8F2; border-radius:14px; padding:10px; margin-bottom:8px;}
+  .match-leader .avatar{ width:38px; height:38px; font-size:13px;}
+  .stars{ font-size:9px; color:var(--gold); margin-top:2px;}
+  .members-strip{ display:flex; align-items:center; gap:6px; margin-bottom:10px;}
+  .mini-av{ width:24px; height:24px; border-radius:50%; background:var(--teal); border:2px solid var(--white); margin-right:-8px; display:flex; align-items:center; justify-content:center; font-size:8px; color:#fff; font-weight:800;}
+  .members-strip .lbl{ font-size:9.5px; color:var(--muted); font-weight:700; margin-right:8px;}
+  .meet-card{ background:#FBEFD2; border-radius:14px; padding:11px; margin-bottom:10px;}
+  .meet-card .t1{ font-size:10.5px; font-weight:800; color:#7A5F17;}
+  .meet-card .t2{ font-size:9.5px; color:#9C7A1E; margin-top:2px;}
+  .btn-row{ display:flex; gap:7px; margin-top:auto; margin-bottom:12px;}
+  .btn-row .btn{ flex:1; }
+
+  /* ---- Screen 4: Live tracking ---- */
+  .map-big{ height:230px; position:relative; border-radius:0; margin:0 -16px; overflow:hidden;}
+  .track-card{ background:var(--white); border-radius:18px 18px 0 0; margin-top:-16px; position:relative; z-index:2; padding:14px 16px; flex:1; display:flex; flex-direction:column;}
+  .eta-badge{ background:var(--teal); color:#fff; font-size:10px; font-weight:800; padding:5px 11px; border-radius:10px; display:inline-block; margin-bottom:8px;}
+  .call-row{ display:flex; gap:8px; margin-top:10px;}
+  .icon-btn{ width:36px; height:36px; border-radius:11px; background:#F0EAD9; display:flex; align-items:center; justify-content:center; font-size:14px;}
+  .sos{ margin-top:auto; text-align:center; font-size:10px; font-weight:800; color:var(--danger); padding:10px; border:1.5px solid #F0D4CE; border-radius:12px; margin-bottom:6px;}
+
+  /* ---- Screen 5: Rating ---- */
+  .done-icon{ font-size:38px; text-align:center; margin:14px 0 4px;}
+  .done-title{ text-align:center; font-size:16px; font-weight:900;}
+  .trip-summary{ text-align:center; font-size:10px; color:var(--muted); margin-top:4px; margin-bottom:14px;}
+  .star-row{ display:flex; justify-content:center; gap:6px; font-size:26px; color:var(--gold); margin-bottom:14px;}
+  .tags-row{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:16px;}
+  .rtag{ font-size:9.5px; font-weight:700; padding:7px 12px; border-radius:16px; background:var(--white); border:1.5px solid #E7DFC9; color:var(--navy);}
+  .rtag.sel{ background:var(--navy); color:var(--gold); border-color:var(--navy);}
+
+  .footer-note{ max-width:640px; margin:8px auto 0; text-align:center; font-size:12.5px; color:#6B5E42; line-height:1.8;}
+  .footer-note b{ color:var(--navy);}
+
+  /* ---- Screen 6: Auto re-arrangement timeline ---- */
+  .tl-item{ display:flex; align-items:flex-start; gap:10px; }
+  .tl-dot{ width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; flex-shrink:0;}
+  .tl-dot.warn{ background:var(--gold); }
+  .tl-dot.busy{ background:#B7A98A; }
+  .tl-dot.ok{ background:var(--teal); }
+  .tl-line{ width:1.5px; height:12px; background:#E7DFC9; margin-right:10.25px;}
+  .tl-body{ padding-top:1px; }
+  .tl-title{ font-size:11px; font-weight:800; color:var(--navy); }
+  .tl-time{ font-size:9px; color:var(--muted); margin-top:1px;}
+  .reassure{ text-align:center; font-size:10px; font-weight:700; color:var(--teal-d); background:#E3F4F1; border-radius:12px; padding:9px; margin-top:8px;}
+
+  /* ---- Screen 8: Weekly subscription ---- */
+  .sub-hero{ background:var(--navy); border-radius:20px; padding:20px; text-align:center; margin-bottom:12px;}
+  .sub-hero .amt{ font-size:32px; font-weight:900; color:#fff; }
+  .sub-hero .per{ font-size:11px; color:var(--gold); font-weight:800; margin-top:2px;}
+  .sub-hero .desc{ font-size:9.5px; color:#9FB3AE; margin-top:8px; line-height:1.5; padding:0 6px;}
+  .status-chip2{ display:inline-flex; align-items:center; gap:5px; background:#E3F4F1; color:var(--teal-d); font-size:9.5px; font-weight:800; padding:5px 12px; border-radius:12px; margin-top:10px;}
+  .pay-row{ display:flex; align-items:center; gap:10px; }
+  .pay-ic{ width:36px; height:36px; border-radius:10px; background:#F0EAD9; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0;}
+  .pay-info b{ font-size:11.5px; display:block; }
+  .pay-info span{ font-size:9.5px; color:var(--muted); }
+  .change-link{ margin-right:auto; font-size:10px; font-weight:800; color:var(--teal-d); }
+  .note-box{ background:#FBEFD2; border-radius:13px; padding:11px; font-size:9.5px; color:#8A6D14; font-weight:700; line-height:1.5; text-align:center; margin-top:10px;}
+  .pay-methods{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:10px;}
+  .pay-method{ display:flex; align-items:center; gap:7px; border:1.5px solid #E7DFC9; border-radius:12px; padding:9px 10px; font-size:10px; font-weight:800; color:var(--muted);}
+  .pay-method.sel{ border-color:var(--navy); background:#F3F0E8; color:var(--navy); }
+  .pay-method .pm-ic{ font-size:14px; width:16px; text-align:center; }
+  .pay-selected-info{ display:flex; align-items:center; gap:8px; padding-top:10px; border-top:1px solid #F0E8D8; }
+  .pay-selected-info b{ font-size:11px; }
+  .pay-selected-info span{ font-size:9.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <span class="eyebrow">الدفعة الأولى — رحلة العضو</span>
+  <h1>ثماني شاشات أساسية لرحلة العضو في تطبيق مسار</h1>
+  <p>من التسجيل، إلى اقتراح الذكاء الاصطناعي لمجموعة الرحلة ونقطة التقاء قريبة من المنزل (بحدود 500 م)، إلى التتبع الحي، إلى التقييم بعد الوصول. رحلتا الذهاب والعودة مرتبطتان تلقائيًا بنفس المجموعة.</p>
+</div>
+
+<div class="flow">
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">خلّنا نعرف مسارك</div>
+          <div class="h-sub">هذا يساعد الذكاء الاصطناعي يطابقك مع أفضل رحلة</div>
+          <div class="map-mini">
+            <svg viewBox="0 0 240 100" width="100%" height="100%">
+              <rect width="240" height="100" fill="#EFEAE0"/>
+              <g stroke="#E1D8C4" stroke-width="1"><path d="M0 30H240M0 65H240M60 0V100M170 0V100"/></g>
+              <path d="M30 75 C 70 60, 110 40, 200 25" fill="none" stroke="#1FB8A6" stroke-width="3" stroke-dasharray="1 8" stroke-linecap="round"/>
+              <circle cx="30" cy="75" r="6" fill="#0B2E38"/>
+              <circle cx="200" cy="25" r="6" fill="#C9A227"/>
+            </svg>
+          </div>
+          <div class="card">
+            <div class="loc-row"><div class="loc-ic">🏠</div><div class="loc-txt"><b>المنزل</b><span>حي النرجس، شارع الأمير سلطان</span></div></div>
+            <div class="loc-row"><div class="loc-ic">🏢</div><div class="loc-txt"><b>جهة العمل</b><span>شركة تقنية — طريق الملك فهد</span></div></div>
+          </div>
+          <div class="card">
+            <div class="loc-txt"><b>أوقات الدوام</b><span>7:00 ص — 4:00 م</span></div>
+            <div class="days">
+              <div class="day on">ح</div><div class="day on">ن</div><div class="day on">ث</div>
+              <div class="day on">ر</div><div class="day on">خ</div><div class="day">ج</div><div class="day">س</div>
+            </div>
+          </div>
+          <div class="loc-txt" style="margin-bottom:5px;"><b>رغبتك في الرحلة</b></div>
+          <div class="role-row">
+            <div class="role-chip">قائد</div>
+            <div class="role-chip sel">عضو رحلة</div>
+            <div class="role-chip">كلاهما</div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 16px;"><div class="btn">التالي</div></div>
+      </div>
+    </div>
+    <div class="step-num">١</div>
+    <div class="step-title">التسجيل والبيانات</div>
+    <div class="step-sub">الموقع، جهة العمل، أوقات الدوام، والدور المفضّل</div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">صباح الخير، فهد 👋</div>
+          <div class="h-sub">جدول هذا الأسبوع (الأحد–الخميس) جاهز</div>
+
+          <div class="trip-card">
+            <div class="trip-head"><span class="trip-tag go">رحلة الذهاب</span><span style="font-size:10px;font-weight:800;color:var(--muted)">6:45 ص</span></div>
+            <div class="leader-row"><div class="avatar">خ</div><div><div class="leader-name">خالد المطيري — القائد</div><div class="leader-role">يمر عليك عند باب منزلك مباشرة</div></div></div>
+            <div class="trip-meta"><span>📍 يمر عند باب بيتك</span><span>✓ مؤكدة</span></div>
+          </div>
+
+          <div class="trip-card">
+            <div class="trip-head"><span class="trip-tag back">رحلة العودة</span><span style="font-size:10px;font-weight:800;color:var(--muted)">4:15 م</span></div>
+            <div class="leader-row"><div class="avatar">خ</div><div><div class="leader-name">خالد المطيري — نفس المجموعة</div><div class="leader-role">مرتبطة تلقائيًا برحلة الذهاب</div></div></div>
+            <div class="trip-meta"><span>🔁 جدول هذا الأسبوع</span><span>✓ مؤكدة</span></div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-mini"><div class="num">5</div><div class="lbl">رحلات هذا الأسبوع</div></div>
+            <div class="stat-mini"><div class="num">6.2</div><div class="lbl">كجم CO₂ أقل</div></div>
+          </div>
+        </div>
+        <div class="bottomnav">
+          <div class="navitem active"><div class="navicon"></div>الرئيسية</div>
+          <div class="navitem"><div class="navicon"></div>رحلاتي</div>
+          <div class="navitem"><div class="navicon"></div>الإشعارات</div>
+          <div class="navitem"><div class="navicon"></div>حسابي</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٢</div>
+    <div class="step-title">الرئيسية</div>
+    <div class="step-sub">جدولة أسبوعية (الأحد–الخميس)؛ الذهاب والعودة مرتبطان بنفس المجموعة</div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">مسار اقترح مجموعتك <span class="sparkle">✨</span></div>
+          <div class="h-sub">لهذا الأسبوع (الأحد–الخميس) · حسب موقعك ودوامك</div>
+
+          <div class="match-leader">
+            <div class="avatar">خ</div>
+            <div>
+              <div class="leader-name">خالد المطيري</div>
+              <div class="stars">★★★★★ <span style="color:var(--muted)">4.9</span></div>
+            </div>
+          </div>
+
+          <div class="members-strip">
+            <div class="mini-av">ع</div><div class="mini-av">ت</div><div class="mini-av">م</div>
+            <span class="lbl">و2 آخرين معك بالرحلة</span>
+          </div>
+
+          <div class="meet-card">
+            <div class="t1">📍 القائد يمر عند باب بيتك مباشرة</div>
+            <div class="t2">ما تحتاج تمشي خطوة · الذكاء الاصطناعي يطابقك ضمن نطاق 500م من مسار القائد</div>
+          </div>
+
+          <div class="map-mini" style="height:90px;">
+            <svg viewBox="0 0 240 90" width="100%" height="100%">
+              <rect width="240" height="90" fill="#EFEAE0"/>
+              <circle cx="20" cy="70" r="26" fill="#1FB8A6" opacity=".12"/>
+              <circle cx="20" cy="70" r="26" fill="none" stroke="#1FB8A6" stroke-width="1.5" stroke-dasharray="3 4"/>
+              <path d="M20 70 C 60 55, 100 30, 220 20" fill="none" stroke="#1FB8A6" stroke-width="3" stroke-dasharray="1 8" stroke-linecap="round"/>
+              <circle cx="20" cy="70" r="5" fill="#0B2E38"/>
+              <circle cx="90" cy="46" r="6" fill="#C9A227"/>
+              <circle cx="220" cy="20" r="5" fill="#16897C"/>
+            </svg>
+          </div>
+
+          <div class="btn-row">
+            <div class="btn ghost">تعديل</div>
+            <div class="btn teal">قبول الانضمام</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٣</div>
+    <div class="step-title">اقتراح الذكاء الاصطناعي</div>
+    <div class="step-sub">القائد يمر عند باب بيت كل عضو؛ 500م هو نطاق مطابقة الذكاء الاصطناعي لا مسافة مشي</div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar" style="position:absolute;z-index:5;width:100%;color:#fff;"><span>9:41</span><span>●●●</span></div>
+        <div class="map-big">
+          <svg viewBox="0 0 270 230" width="100%" height="100%">
+            <rect width="270" height="230" fill="#DCEAE8"/>
+            <g stroke="#C9DEDB" stroke-width="1"><path d="M0 70H270M0 130H270M70 0V230M180 0V230"/></g>
+            <path d="M30 200 C 80 170, 130 110, 230 40" fill="none" stroke="#0B2E38" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="150" cy="90" r="9" fill="#1FB8A6"/>
+            <circle cx="230" cy="40" r="7" fill="#C9A227"/>
+          </svg>
+        </div>
+        <div class="track-card">
+          <span class="eta-badge">القائد يقترب — 3 دقائق</span>
+          <div class="leader-row"><div class="avatar">خ</div><div><div class="leader-name">خالد المطيري</div><div class="leader-role">تويوتا كامري · بيضاء</div></div></div>
+          <div class="call-row">
+            <div class="icon-btn">📞</div>
+            <div class="icon-btn">💬</div>
+            <div style="flex:1; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--muted); font-weight:700;">نقطة التقائك بعد 200 م</div>
+          </div>
+          <div class="sos">🆘 طوارئ ودعم فوري</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٤</div>
+    <div class="step-title">التتبع المباشر</div>
+    <div class="step-sub">إشعار عند اقتراب القائد + زر طوارئ دائم الظهور</div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="done-icon">🎉</div>
+          <div class="done-title">وصلت بسلام</div>
+          <div class="trip-summary">حي النرجس ← طريق الملك فهد · 24 دقيقة</div>
+
+          <div class="star-row">★★★★★</div>
+
+          <div class="loc-txt" style="text-align:center;margin-bottom:8px;"><b>كيف كانت رحلتك مع خالد؟</b></div>
+          <div class="tags-row">
+            <div class="rtag sel">الالتزام بالوقت</div>
+            <div class="rtag sel">قيادة آمنة</div>
+            <div class="rtag">ودود</div>
+            <div class="rtag">نظافة المركبة</div>
+          </div>
+
+          <div style="margin-top:auto;padding-bottom:16px;"><div class="btn">إرسال التقييم</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٥</div>
+    <div class="step-title">تقييم الرحلة</div>
+    <div class="step-sub">يغذّي الذكاء الاصطناعي لتحسين المطابقة القادمة</div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">إعادة ترتيب تلقائي</div>
+          <div class="h-sub" style="display:flex;align-items:center;gap:6px;">
+            <span class="trip-tag go" style="margin-left:4px;">رحلة الذهاب</span>الثلاثاء · 6:45 ص
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot warn">!</div>
+            <div class="tl-body">
+              <div class="tl-title">خالد اعتذر عن رحلة اليوم</div>
+              <div class="tl-time">4:02 ص</div>
+            </div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-item">
+            <div class="tl-dot busy">⟳</div>
+            <div class="tl-body">
+              <div class="tl-title">مسار يبحث عن قائد بديل بالقرب منك...</div>
+              <div class="tl-time">4:02 ص</div>
+            </div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-item">
+            <div class="tl-dot ok">✓</div>
+            <div class="tl-body">
+              <div class="tl-title">تم إيجاد بديل</div>
+              <div class="tl-time">4:04 ص</div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:6px;">
+            <div class="leader-row"><div class="avatar" style="background:var(--teal)">س</div><div><div class="leader-name">سعيد الشهري — القائد البديل</div><div class="leader-role">★ 4.8 · يمر عند بابك بنفس الترتيب تقريبًا</div></div></div>
+            <div class="trip-meta"><span>🕡 6:45 ص كالمعتاد</span><span>✓ مؤكدة</span></div>
+          </div>
+
+          <div class="reassure">بقية أعضاء رحلتك (٢) لم يتأثروا بالتغيير</div>
+
+          <div style="margin-top:auto;padding-bottom:16px;"><div class="btn">تم، شكرًا</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٦</div>
+    <div class="step-title">إعادة الترتيب التلقائي — الذهاب</div>
+    <div class="step-sub">إذا انسحب القائد أو عضو، يجد النظام بديلًا فورًا دون تعطيل بقية المجموعة</div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">إعادة ترتيب تلقائي</div>
+          <div class="h-sub" style="display:flex;align-items:center;gap:6px;">
+            <span class="trip-tag back" style="margin-left:4px;">رحلة العودة</span>الأربعاء · 4:15 م
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot warn">!</div>
+            <div class="tl-body">
+              <div class="tl-title">خالد سيتأخر بعد الدوام — لن يقود العودة</div>
+              <div class="tl-time">1:15 م</div>
+            </div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-item">
+            <div class="tl-dot busy">⟳</div>
+            <div class="tl-body">
+              <div class="tl-title">مسار يرتّب رحلة العودة فقط...</div>
+              <div class="tl-time">1:15 م</div>
+            </div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-item">
+            <div class="tl-dot ok">✓</div>
+            <div class="tl-body">
+              <div class="tl-title">تم — رحلة عودة بديلة جاهزة</div>
+              <div class="tl-time">1:17 م</div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:6px;">
+            <div class="leader-row"><div class="avatar" style="background:var(--teal)">ت</div><div><div class="leader-name">تركي الحربي — قائد العودة</div><div class="leader-role">★ 4.7 · نفس نقاط النزول تقريبًا</div></div></div>
+            <div class="trip-meta"><span>🕟 4:15 م كالمعتاد</span><span>✓ مؤكدة</span></div>
+          </div>
+
+          <div class="reassure">رحلة الذهاب هذا اليوم لم تتأثر إطلاقًا</div>
+
+          <div style="margin-top:auto;padding-bottom:16px;"><div class="btn">تم، شكرًا</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٧</div>
+    <div class="step-title">إعادة الترتيب التلقائي — العودة</div>
+    <div class="step-sub">نفس المبدأ يطبَّق على رحلة العودة بشكل مستقل عن رحلة الذهاب</div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="step">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+        <div class="content">
+          <div class="h-title">اشتراكك الأسبوعي</div>
+          <div class="h-sub">يضمن لك مقعدًا في الذهاب والعودة، بغض النظر عن القائد</div>
+
+          <div class="sub-hero">
+            <div class="amt">200 ريال</div>
+            <div class="per">أسبوعيًا · الأحد – الخميس</div>
+            <div class="desc">يشمل رحلتي الذهاب والعودة يوميًا. لو تغيّر القائد منتصف الأسبوع، اشتراكك لا يتأثر — مسار يضمن لك الخدمة.</div>
+            <div class="status-chip2">✓ نشط حتى الخميس القادم</div>
+          </div>
+
+          <div class="card">
+            <div class="loc-txt" style="margin-bottom:8px;"><b>طريقة الدفع</b></div>
+            <div class="pay-methods">
+              <div class="pay-method sel"><span class="pm-ic">💳</span><span>مدى</span></div>
+              <div class="pay-method"><span class="pm-ic"></span><span>Apple Pay</span></div>
+              <div class="pay-method"><span class="pm-ic">💳</span><span>فيزا / ماستركارد</span></div>
+              <div class="pay-method"><span class="pm-ic">📱</span><span>STC Pay</span></div>
+            </div>
+            <div class="pay-selected-info"><b>مدى</b><span>تنتهي بـ 4521</span><div class="change-link">تغيير</div></div>
+          </div>
+
+          <div class="card">
+            <div class="loc-txt"><b>الدفعة القادمة</b><span>الأحد القادم · تجديد تلقائي</span></div>
+          </div>
+
+          <div class="note-box">اشتراكك يذهب لمسار مباشرة، وليس لقائد معيّن — هذا يضمن استمرار خدمتك حتى مع تغيّر القادة</div>
+
+          <div style="margin-top:auto;padding-bottom:16px;"><div class="btn ghost">عرض سجل المدفوعات</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-num">٨</div>
+    <div class="step-title">الاشتراك الأسبوعي</div>
+    <div class="step-sub">العضو يدفع لمسار وليس للقائد — ضمان خدمة لا ارتباط بشخص</div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  أضفت <b>الشاشة الثامنة</b> — الاشتراك الأسبوعي (٢٠٠ ريال) الذي يدفعه العضو لمسار مباشرة، لا للقائد، بما يضمن استمرار الخدمة حتى لو تغيّر القائد منتصف الأسبوع. راجعها، وبعدها أكمل على شاشة أرباح القائد.
+</div>
+
+</body>
+</html>
